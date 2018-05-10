@@ -19,12 +19,12 @@ fi
 cat <<EOF > ${SCRIPTPATH}/etc/nginx.conf
 worker_processes 1;
 #daemon off;
-#access_log /var/log/nginx/access.log;
-#error_log /var/log/nginx/error.log;
 events {
     worker_connections 1024;
 }
 http {
+        error_log /var/log/nginx/error.log;
+        access_log /var/log/nginx/access.log;
         server {
             listen          80;
             server_name     nginx;
@@ -36,6 +36,7 @@ http {
 EOF
 
 # generate docker-compose file
+[ ! -d /srv/log/nginx ] && mkdir -p /srv/log/nginx
 cat <<EOF > ${SCRIPTPATH}/docker-compose.yml
 version: '2'
 services:
@@ -46,6 +47,7 @@ services:
    - "${NGINX_PORT}:80"
   volumes:
    - ${SCRIPTPATH}/etc/nginx.conf:/etc/nginx/nginx.conf
+   - /srv/log/nginx:/var/log/nginx
   links:
    - apache
  apache:
