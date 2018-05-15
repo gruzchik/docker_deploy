@@ -76,4 +76,4 @@ services:
   container_name: mir_apache
 EOF
 
-docker-compose up -d
+cd ${SCRIPTPATH} && docker-compose up -d
