@@ -67,7 +67,7 @@ services:
    - "${NGINX_PORT}:80"
   volumes:
    - ${SCRIPTPATH}/etc/nginx.conf:/etc/nginx/nginx.conf
-   - /srv/log/nginx:/var/log/nginx
+   - ${NGINX_LOG_DIR}:/var/log/nginx
    - /etc/ssl/certs:/etc/ssl/certs
   links:
    - apache
